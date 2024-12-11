@@ -3,7 +3,9 @@ import {z} from "zod";
 
 import * as blueslip from "./blueslip";
 import * as people from "./people";
+import {maybe_get_user_by_id} from "./people";
 import {topic_link_schema} from "./types";
+import {CustomProfileFieldData} from "./user_profile";
 import type {UserStatusEmojiInfo} from "./user_status";
 import * as util from "./util";
 
@@ -345,5 +347,13 @@ export function reify_message_id({old_id, new_id}: {old_id: number; new_id: numb
 export function remove(message_ids: number[]): void {
     for (const message_id of message_ids) {
         stored_messages.delete(message_id);
+    }
+}
+
+export function update_animated_avatar_url(user_id: number, animated_avatar_url: string): void {
+    const user = get_by_user_id(user_id);
+
+    if (user) {
+        user.animated_avatar_url = animated_avatar_url;
     }
 }

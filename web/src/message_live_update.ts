@@ -2,6 +2,19 @@ import * as message_lists from "./message_lists";
 import * as message_store from "./message_store";
 import type {UserStatusEmojiInfo} from "./user_status";
 
+
+// Função para atualizar o avatar animado
+export function update_avatar(user_id: number, avatar_url: string, animated_avatar_url: string): void {
+    // Atualizar a URL do avatar
+    message_store.update_small_avatar_url(user_id, avatar_url);
+    
+    // Atualizar a URL do avatar animado (caso haja)
+    message_store.update_animated_avatar_url(user_id, animated_avatar_url);
+    
+    rerender_messages_view_for_user(user_id);
+}
+
+
 export function rerender_messages_view(): void {
     for (const list of message_lists.all_rendered_message_lists()) {
         list.rerender_view();
@@ -75,11 +88,6 @@ export function update_stream_name(stream_id: number, new_name: string): void {
 
 export function update_user_full_name(user_id: number, full_name: string): void {
     message_store.update_sender_full_name(user_id, full_name);
-    rerender_messages_view_for_user(user_id);
-}
-
-export function update_avatar(user_id: number, avatar_url: string): void {
-    message_store.update_small_avatar_url(user_id, avatar_url);
     rerender_messages_view_for_user(user_id);
 }
 

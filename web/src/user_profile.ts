@@ -74,6 +74,7 @@ type CustomProfileFieldData = {
     rendered_value?: string | null | undefined;
     subtype?: string;
     link?: string;
+    animated_avatar_url?: string;
 };
 
 let user_streams_list_widget: ListWidgetType<StreamSubscription> | undefined;
